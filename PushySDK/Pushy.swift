@@ -63,7 +63,9 @@ public class Pushy : NSObject, UNUserNotificationCenterDelegate {
         invokeNotificationHandler(notification.request.content.userInfo, {(UIBackgroundFetchResult) in})
         
         // Show in-app banner (no sound or badge)
-        completionHandler([.alert])
+        guard let hideBanner = notification.request.content.userInfo["hideInAppBanner"] as? Bool else {
+            completionHandler([.alert])
+        }
     }
     
     // Notification click on in-app banner (iOS 10+), invoke notification click listener
